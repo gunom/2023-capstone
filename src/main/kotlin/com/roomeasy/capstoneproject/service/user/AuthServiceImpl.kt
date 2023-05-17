@@ -40,8 +40,8 @@ class AuthServiceImpl(
     @Transactional
     override fun loginWithToken(providerName: String, userToken: String): LoginResponseDto {
 
-//        val user: User = getUserProfileByToken(providerName, userToken);
-        val user = userRepository.findById(1).get()
+        val user: User = getUserProfileByToken(providerName, userToken);
+//        val user = userRepository.findById(1).get()
         val loginResponse: LoginResponseDto = jwtTokenProvider.generateTokenByUserId(user.id).let {
             LoginResponseDto(it.first, it.second)
         }
