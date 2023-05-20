@@ -16,6 +16,8 @@ class ChatMessage(
 
     var userId: Long,
 
+    var sessionId: String?,
+
     var content: String,
 
     var timestamp: LocalDateTime = LocalDateTime.now(),

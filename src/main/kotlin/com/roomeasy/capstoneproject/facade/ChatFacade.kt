@@ -20,11 +20,12 @@ class ChatFacade(
     private val chatRoomUserService: ChatRoomUserService,
     private val userService: UserService,
 ) {
-    fun saveMessage(chatRoomId: Long, content: String, principal: Principal): ChatMessage {
+    fun saveMessage(chatRoomId: Long, content: String, principal: Principal, sessionId: String?): ChatMessage {
         val userId = principal.name.toLong()
         val user = userService.getUserById(userId)
         val message = ChatMessage(
             userId = userId,
+            sessionId = sessionId,
             sender = user.name,
             content = content,
             chatRoomId = chatRoomId,
