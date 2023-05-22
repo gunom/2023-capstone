@@ -24,8 +24,11 @@ class RoomFacade(
         val roomList = roomService.getByIds(roomIds)
         return roomList.map {
             RoomDto(
-                id = it.id
-                // 추가 필요
+                id = it.id,
+                deposit = it.deposit,
+                imagesThumbnail = it.imagesThumbnail,
+                rent = it.rent,
+                sizeM2 = it.sizeM2
             )
         }
     }
@@ -52,8 +55,11 @@ class RoomFacade(
         val rooms = roomService.getByIds(bookmarkList.map { it.roomId })
         return rooms.map {
             RoomDto(
-                id = it.id
-                // 추가 필요
+                id = it.id,
+                deposit = it.deposit,
+                imagesThumbnail = it.imagesThumbnail,
+                rent = it.rent,
+                sizeM2 = it.sizeM2
             )
         }
     }
@@ -86,7 +92,7 @@ class RoomFacade(
         return reviewService.getReview(roomId)
     }
 
-    fun deleteReview(reviewId: Long){
+    fun deleteReview(reviewId: Long) {
         val userId = authService.getUserId()
         reviewService.deleteReview(reviewId, userId)
     }

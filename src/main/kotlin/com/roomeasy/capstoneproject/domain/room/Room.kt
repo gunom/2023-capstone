@@ -9,5 +9,17 @@ import javax.persistence.Id
 class Room (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long = 0
+    var id: Long = 0,
+    var roomId: String? = null,
+    var deposit: Int? = null,
+    var address: String? = null,
+    var floor: String? = null,
+    var imagesThumbnail: String? = null,
+    var rent: Double? = null,
+    var manageCost: Double? = null,
+    var serviceType: String? = null,
+    var salesType: String? = null,
+    var latitude: Double? = null,
+    var longitude: Double? = null,
+    var sizeM2: Double? = null
 )
