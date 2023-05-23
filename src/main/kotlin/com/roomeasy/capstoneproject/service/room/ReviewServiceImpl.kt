@@ -35,21 +35,8 @@ class ReviewServiceImpl(
         )
     }
 
-    override fun getReview(roomId: Long): List<ReviewDto> {
-        return reviewRepository.findByRoomId(roomId).map {
-            ReviewDto(
-                id = it.id,
-                userId = it.userId,
-                roomId = it.roomId,
-                timeOfResidence = it.timeOfResidence,
-                ageGroup = it.ageGroup,
-                gender = it.gender,
-                transportationRating = it.transportationRating,
-                neighborhoodRating = it.neighborhoodRating,
-                livingConditionsRating = it.livingConditionsRating,
-                freeComments = it.freeComments,
-            )
-        }
+    override fun getReview(roomId: Long): List<Review> {
+        return reviewRepository.findByRoomId(roomId)
     }
 
     override fun deleteReview(reviewId: Long, userId: Long) {

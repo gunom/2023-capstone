@@ -7,6 +7,7 @@ import com.roomeasy.capstoneproject.service.room.ReviewService
 import com.roomeasy.capstoneproject.service.room.RoomService
 import com.roomeasy.capstoneproject.service.dto.ReviewDto
 import com.roomeasy.capstoneproject.service.dto.RoomDto
+import com.roomeasy.capstoneproject.service.user.UserService
 import org.springframework.stereotype.Service
 
 @Service
@@ -16,6 +17,7 @@ class RoomFacade(
     private val roomService: RoomService,
     private val bookmarkService: BookmarkService,
     private val reviewService: ReviewService,
+    private val userService: UserService,
 ) {
     fun getRoomListForBroker(): List<RoomDto> {
         val userId = authService.getUserId()
@@ -89,7 +91,28 @@ class RoomFacade(
     }
 
     fun getReviewList(roomId: Long): List<ReviewDto> {
-        return reviewService.getReview(roomId)
+        val reviewList = reviewService.getReview(roomId)
+        val userIds = reviewList.map { it.userId }
+        val users = userService.getUserByIds(userIds)
+        return reviewList.fold(mutableListOf()) { acc, review ->
+            val userName =
+                users.find { it.id == review.userId }?.name ?: throw Exception("User not found")
+            val reviewDto = ReviewDto(
+                id = review.id,
+                userId = review.userId,
+                name = userName,
+                roomId = review.roomId,
+                timeOfResidence = review.timeOfResidence,
+                ageGroup = review.ageGroup,
+                gender = review.gender,
+                transportationRating = review.transportationRating,
+                neighborhoodRating = review.neighborhoodRating,
+                livingConditionsRating = review.livingConditionsRating,
+                freeComments = review.freeComments,
+            )
+            acc.add(reviewDto)
+            acc
+        }
     }
 
     fun deleteReview(reviewId: Long) {

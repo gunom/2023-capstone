@@ -1,5 +1,6 @@
 package com.roomeasy.capstoneproject.service.room
 
+import com.roomeasy.capstoneproject.domain.room.Review
 import com.roomeasy.capstoneproject.service.dto.ReviewDto
 
 interface ReviewService {
@@ -15,7 +16,7 @@ interface ReviewService {
         freeComments: String?
     )
 
-    fun getReview(roomId: Long): List<ReviewDto>
+    fun getReview(roomId: Long): List<Review>
 
     fun deleteReview(reviewId: Long, userId: Long)
 }
