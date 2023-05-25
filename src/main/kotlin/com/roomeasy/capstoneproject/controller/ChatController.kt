@@ -21,10 +21,8 @@ class ChatController(
     fun sendMessage(
         @Payload chatMessage: ChatMessageDto,
         principal: Principal,
-        headerAccessor: SimpMessageHeaderAccessor
     ) {
-        val sessionId = headerAccessor.sessionId
-        val savedMessage = chatFacade.saveMessage(chatMessage.chatRoomId, chatMessage.content, principal, sessionId)
+        val savedMessage = chatFacade.saveMessage(chatMessage.chatRoomId, chatMessage.content, principal, chatMessage.accessToken)
         messagingTemplate.convertAndSend("/sub/channel/${chatMessage.chatRoomId}", savedMessage)
     }
 }

@@ -4,6 +4,7 @@ import com.roomeasy.capstoneproject.domain.chat.ChatMessage
 import com.roomeasy.capstoneproject.service.chat.ChatMessageService
 import com.roomeasy.capstoneproject.service.chat.ChatRoomService
 import com.roomeasy.capstoneproject.service.chat.ChatRoomUserService
+import com.roomeasy.capstoneproject.service.dto.ChatMessageDto
 import com.roomeasy.capstoneproject.service.user.AuthService
 import com.roomeasy.capstoneproject.service.user.UserService
 import com.roomeasy.capstoneproject.service.dto.ChatRoomDto
@@ -20,12 +21,12 @@ class ChatFacade(
     private val chatRoomUserService: ChatRoomUserService,
     private val userService: UserService,
 ) {
-    fun saveMessage(chatRoomId: Long, content: String, principal: Principal, sessionId: String?): ChatMessage {
+    fun saveMessage(chatRoomId: Long, content: String, principal: Principal, accessToken: String): ChatMessage {
         val userId = principal.name.toLong()
         val user = userService.getUserById(userId)
         val message = ChatMessage(
             userId = userId,
-            sessionId = sessionId,
+            accessToken = accessToken,
             sender = user.name,
             content = content,
             chatRoomId = chatRoomId,
@@ -34,8 +35,19 @@ class ChatFacade(
         return chatMessageService.saveChatMessage(message)
     }
 
-    fun getChatRoomMessages(chatRoomId: Long): List<ChatMessage> {
-        return chatMessageService.getChatMessagesByChatRoomId(chatRoomId)
+    fun getChatRoomMessages(chatRoomId: Long): List<ChatMessageDto> {
+        val userId = authService.getUserId()
+        return chatMessageService.getChatMessagesByChatRoomId(chatRoomId).map {
+            ChatMessageDto(
+                id = it.id,
+                sender = it.sender,
+                userId = it.userId,
+                myMessage = it.userId == userId,
+                content = it.content,
+                timestamp = it.timestamp,
+                chatRoomId = it.chatRoomId
+            )
+        }
     }
 
     fun getChatRoomsForUser(): MutableList<ChatRoomDto> {

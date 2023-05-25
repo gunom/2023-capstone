@@ -16,7 +16,7 @@ class ChatMessage(
 
     var userId: Long,
 
-    var sessionId: String?,
+    var accessToken: String?,
 
     var content: String,
 
