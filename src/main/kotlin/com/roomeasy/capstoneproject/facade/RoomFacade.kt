@@ -91,6 +91,7 @@ class RoomFacade(
     }
 
     fun getReviewList(roomId: Long): List<ReviewDto> {
+        val userId = authService.getUserId()
         val reviewList = reviewService.getReview(roomId)
         val userIds = reviewList.map { it.userId }
         val users = userService.getUserByIds(userIds)
@@ -100,14 +101,11 @@ class RoomFacade(
             val reviewDto = ReviewDto(
                 id = review.id,
                 userId = review.userId,
+                myReview = review.userId == userId,
                 name = userName,
                 roomId = review.roomId,
                 timeOfResidence = review.timeOfResidence,
-                ageGroup = review.ageGroup,
-                gender = review.gender,
-                transportationRating = review.transportationRating,
-                neighborhoodRating = review.neighborhoodRating,
-                livingConditionsRating = review.livingConditionsRating,
+                score = (review.transportationRating + review.neighborhoodRating + review.livingConditionsRating) / 3.0,
                 freeComments = review.freeComments,
             )
             acc.add(reviewDto)

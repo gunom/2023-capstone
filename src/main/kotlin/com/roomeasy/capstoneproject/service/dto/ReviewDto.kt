@@ -6,10 +6,7 @@ data class ReviewDto(
     val name: String,
     val roomId: Long,
     val timeOfResidence: Int,
-    val ageGroup: String,
-    val gender: String,
-    val transportationRating: Int,
-    val neighborhoodRating: Int,
-    val livingConditionsRating: Int,
-    val freeComments: String? = null
+    val score: Double,
+    val freeComments: String? = null,
+    val myReview: Boolean
 )
