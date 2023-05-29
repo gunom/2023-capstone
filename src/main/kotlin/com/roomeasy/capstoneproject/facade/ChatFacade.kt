@@ -1,9 +1,11 @@
 package com.roomeasy.capstoneproject.facade
 
 import com.roomeasy.capstoneproject.domain.chat.ChatMessage
+import com.roomeasy.capstoneproject.domain.chat.Reminder
 import com.roomeasy.capstoneproject.service.chat.ChatMessageService
 import com.roomeasy.capstoneproject.service.chat.ChatRoomService
 import com.roomeasy.capstoneproject.service.chat.ChatRoomUserService
+import com.roomeasy.capstoneproject.service.chat.ReminderService
 import com.roomeasy.capstoneproject.service.dto.ChatMessageDto
 import com.roomeasy.capstoneproject.service.user.AuthService
 import com.roomeasy.capstoneproject.service.user.UserService
@@ -20,6 +22,7 @@ class ChatFacade(
     private val chatMessageService: ChatMessageService,
     private val chatRoomUserService: ChatRoomUserService,
     private val userService: UserService,
+    private val reminderService: ReminderService,
 ) {
     fun saveMessage(chatRoomId: Long, content: String, principal: Principal, accessToken: String): ChatMessage {
         val userId = principal.name.toLong()
@@ -88,5 +91,14 @@ class ChatFacade(
         val chatRoom = chatRoomService.createChatRoom()
         chatRoomUserService.addChatRoomUser(chatRoom.id, userId)
         chatRoomUserService.addChatRoomUser(chatRoom.id, brokerId)
+    }
+
+    fun getReminder(chatRoomId: Long): Reminder {
+        return reminderService.getReminderByChatRoomId(chatRoomId)
+    }
+
+    fun addReminder(chatRoomId: Long, date: String, time: String, place: String, longitude: String, latitude: String) {
+        val userId = authService.getUserId()
+        return reminderService.addReminder(userId, chatRoomId, date, time, place, longitude, latitude)
     }
 }
