@@ -5,6 +5,7 @@ import com.roomeasy.capstoneproject.controller.dto.ResponseWithData
 import com.roomeasy.capstoneproject.controller.dto.ReviewRequestDto
 import com.roomeasy.capstoneproject.facade.RoomFacade
 import com.roomeasy.capstoneproject.facade.UserFacade
+import com.roomeasy.capstoneproject.service.dto.BrokerReviewDto
 import com.roomeasy.capstoneproject.service.dto.ReviewDto
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -53,7 +54,7 @@ class ReviewController(
     }
 
     @GetMapping("/broker?broker_id={brokerId}")
-    fun getBrokerReview(@PathVariable("brokerId") brokerId: Long): ResponseEntity<ResponseWithData<Double>> {
+    fun getBrokerReview(@PathVariable("brokerId") brokerId: Long): ResponseEntity<ResponseWithData<BrokerReviewDto>> {
         val brokerReview = userFacade.getBrokerReview(brokerId)
         return ResponseEntity.ok()
             .body(ResponseWithData(HttpStatus.OK.value(), true, "중개인 리뷰 조회 성공", brokerReview))

@@ -1,5 +1,6 @@
 package com.roomeasy.capstoneproject.facade
 
+import com.roomeasy.capstoneproject.service.dto.BrokerReviewDto
 import com.roomeasy.capstoneproject.service.user.AuthService
 import com.roomeasy.capstoneproject.service.user.UserService
 import com.roomeasy.capstoneproject.service.dto.LoginResponseDto
@@ -31,7 +32,7 @@ class UserFacade(
         }
     }
 
-    fun getBrokerReview(brokerId: Long): Double {
+    fun getBrokerReview(brokerId: Long): BrokerReviewDto {
         return brokerReviewService.getBrokerReviewByBrokerId(brokerId)
     }
 
