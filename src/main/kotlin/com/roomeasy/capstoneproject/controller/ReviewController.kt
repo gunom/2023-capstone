@@ -1,8 +1,10 @@
 package com.roomeasy.capstoneproject.controller
 
+import com.roomeasy.capstoneproject.controller.dto.BrokerReviewRequestDto
 import com.roomeasy.capstoneproject.controller.dto.ResponseWithData
 import com.roomeasy.capstoneproject.controller.dto.ReviewRequestDto
 import com.roomeasy.capstoneproject.facade.RoomFacade
+import com.roomeasy.capstoneproject.facade.UserFacade
 import com.roomeasy.capstoneproject.service.dto.ReviewDto
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/review")
 class ReviewController(
     private val roomFacade: RoomFacade,
+    private val userFacade: UserFacade,
 ) {
     @GetMapping("/list?room_id={room_id}")
     fun getReviewList(@PathVariable("room_id") roomId: Long): ResponseEntity<ResponseWithData<List<ReviewDto>>> {
@@ -48,4 +51,19 @@ class ReviewController(
         return ResponseEntity.ok()
             .body(ResponseWithData(HttpStatus.OK.value(), true, "리뷰 등록 성공", null))
     }
+
+    @GetMapping("/broker?broker_id={brokerId}")
+    fun getBrokerReview(@PathVariable("brokerId") brokerId: Long): ResponseEntity<ResponseWithData<Double>> {
+        val brokerReview = userFacade.getBrokerReview(brokerId)
+        return ResponseEntity.ok()
+            .body(ResponseWithData(HttpStatus.OK.value(), true, "중개인 리뷰 조회 성공", brokerReview))
+    }
+
+    @PostMapping("/broker?broker_id={brokerId}")
+    fun addBrokerReview(@PathVariable("brokerId") brokerId: Long, @RequestBody brokerReviewRequestDto: BrokerReviewRequestDto): ResponseEntity<ResponseWithData<Nothing?>> {
+        val brokerReview = userFacade.addBrokerReview(brokerId, brokerReviewRequestDto.score)
+        return ResponseEntity.ok()
+            .body(ResponseWithData(HttpStatus.OK.value(), true, "중개인 리뷰 등록 성공", null))
+    }
+
 }

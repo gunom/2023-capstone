@@ -3,12 +3,14 @@ package com.roomeasy.capstoneproject.facade
 import com.roomeasy.capstoneproject.service.user.AuthService
 import com.roomeasy.capstoneproject.service.user.UserService
 import com.roomeasy.capstoneproject.service.dto.LoginResponseDto
+import com.roomeasy.capstoneproject.service.user.BrokerReviewService
 import org.springframework.stereotype.Service
 
 @Service
 class UserFacade(
     private val authService: AuthService,
     private val userService: UserService,
+    private val brokerReviewService: BrokerReviewService,
 ){
     fun loginWithToken(provider: String, token: String): LoginResponseDto{
         return authService.loginWithToken(provider, token)
@@ -27,5 +29,14 @@ class UserFacade(
                 it.second
             )
         }
+    }
+
+    fun getBrokerReview(brokerId: Long): Double {
+        return brokerReviewService.getBrokerReviewByBrokerId(brokerId)
+    }
+
+    fun addBrokerReview(brokerId: Long, score: Int){
+        val userId = authService.getUserId()
+        brokerReviewService.addBrokerReview(userId, brokerId, score)
     }
 }
