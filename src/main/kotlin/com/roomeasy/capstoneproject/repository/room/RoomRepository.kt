@@ -4,5 +4,5 @@ import com.roomeasy.capstoneproject.domain.room.Room
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface RoomRepository: JpaRepository<Room, Long> {
-    fun findByIdIn(roomIds: List<Long>): List<Room>
+    fun findByIdIn(ids: List<Long>): List<Room>
 }
