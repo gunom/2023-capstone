@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -23,15 +24,15 @@ class ReviewController(
     private val roomFacade: RoomFacade,
     private val userFacade: UserFacade,
 ) {
-    @GetMapping("/list?room_id={room_id}")
-    fun getReviewList(@PathVariable("room_id") roomId: Long): ResponseEntity<ResponseWithData<List<ReviewDto>>> {
+    @GetMapping("/list")
+    fun getReviewList(@RequestParam("room_id") roomId: Long): ResponseEntity<ResponseWithData<List<ReviewDto>>> {
         val reviewList = roomFacade.getReviewList(roomId)
         return ResponseEntity.ok()
             .body(ResponseWithData(HttpStatus.OK.value(), true, "리뷰 조회 성공", reviewList))
     }
 
-    @DeleteMapping("/delete?review_id={review_id}")
-    fun deleteReview(@PathVariable("review_id") reviewId: Long): ResponseEntity<ResponseWithData<Nothing?>> {
+    @DeleteMapping("/delete")
+    fun deleteReview(@RequestParam("review_id") reviewId: Long): ResponseEntity<ResponseWithData<Nothing?>> {
         roomFacade.deleteReview(reviewId)
         return ResponseEntity.ok()
             .body(ResponseWithData(HttpStatus.OK.value(), true, "리뷰 삭제 성공", null))
@@ -53,15 +54,15 @@ class ReviewController(
             .body(ResponseWithData(HttpStatus.OK.value(), true, "리뷰 등록 성공", null))
     }
 
-    @GetMapping("/broker?broker_id={brokerId}")
-    fun getBrokerReview(@PathVariable("brokerId") brokerId: Long): ResponseEntity<ResponseWithData<BrokerReviewDto>> {
+    @GetMapping("/broker")
+    fun getBrokerReview(@RequestParam("broker_Id") brokerId: Long): ResponseEntity<ResponseWithData<BrokerReviewDto>> {
         val brokerReview = userFacade.getBrokerReview(brokerId)
         return ResponseEntity.ok()
             .body(ResponseWithData(HttpStatus.OK.value(), true, "중개인 리뷰 조회 성공", brokerReview))
     }
 
-    @PostMapping("/broker?broker_id={brokerId}")
-    fun addBrokerReview(@PathVariable("brokerId") brokerId: Long, @RequestBody brokerReviewRequestDto: BrokerReviewRequestDto): ResponseEntity<ResponseWithData<Nothing?>> {
+    @PostMapping("/broker")
+    fun addBrokerReview(@RequestParam("broker_Id") brokerId: Long, @RequestBody brokerReviewRequestDto: BrokerReviewRequestDto): ResponseEntity<ResponseWithData<Nothing?>> {
         val brokerReview = userFacade.addBrokerReview(brokerId, brokerReviewRequestDto.kindness, brokerReviewRequestDto.reliability, brokerReviewRequestDto.responseTime)
         return ResponseEntity.ok()
             .body(ResponseWithData(HttpStatus.OK.value(), true, "중개인 리뷰 등록 성공", null))

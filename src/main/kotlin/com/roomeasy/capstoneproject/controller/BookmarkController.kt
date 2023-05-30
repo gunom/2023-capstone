@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*
 class BookmarkController(
     private val roomFacade: RoomFacade,
 ) {
-    @PostMapping("/add?room_id={room_id}")
-    fun toggleBookmark(@PathVariable("room_id") roomId: Long): ResponseEntity<ResponseWithData<Nothing?>> {
+    @PostMapping("/add")
+    fun toggleBookmark(@RequestParam("room_id") roomId: Long): ResponseEntity<ResponseWithData<Nothing?>> {
         val result = roomFacade.toggleBookmark(roomId)
         return ResponseEntity.ok()
             .body(ResponseWithData(HttpStatus.OK.value(), true, result, null))
