@@ -55,14 +55,14 @@ class ReviewController(
     }
 
     @GetMapping("/broker")
-    fun getBrokerReview(@RequestParam("broker_Id") brokerId: Long): ResponseEntity<ResponseWithData<BrokerReviewDto>> {
+    fun getBrokerReview(@RequestParam("broker_id") brokerId: Long): ResponseEntity<ResponseWithData<BrokerReviewDto>> {
         val brokerReview = userFacade.getBrokerReview(brokerId)
         return ResponseEntity.ok()
             .body(ResponseWithData(HttpStatus.OK.value(), true, "중개인 리뷰 조회 성공", brokerReview))
     }
 
     @PostMapping("/broker")
-    fun addBrokerReview(@RequestParam("broker_Id") brokerId: Long, @RequestBody brokerReviewRequestDto: BrokerReviewRequestDto): ResponseEntity<ResponseWithData<Nothing?>> {
+    fun addBrokerReview(@RequestParam("broker_id") brokerId: Long, @RequestBody brokerReviewRequestDto: BrokerReviewRequestDto): ResponseEntity<ResponseWithData<Nothing?>> {
         val brokerReview = userFacade.addBrokerReview(brokerId, brokerReviewRequestDto.kindness, brokerReviewRequestDto.reliability, brokerReviewRequestDto.responseTime)
         return ResponseEntity.ok()
             .body(ResponseWithData(HttpStatus.OK.value(), true, "중개인 리뷰 등록 성공", null))
