@@ -4,6 +4,7 @@ import com.roomeasy.capstoneproject.service.dto.BrokerReviewDto
 import com.roomeasy.capstoneproject.service.user.AuthService
 import com.roomeasy.capstoneproject.service.user.UserService
 import com.roomeasy.capstoneproject.service.dto.LoginResponseDto
+import com.roomeasy.capstoneproject.service.dto.RegisterInformationDto
 import com.roomeasy.capstoneproject.service.user.BrokerReviewService
 import org.springframework.stereotype.Service
 
@@ -17,10 +18,10 @@ class UserFacade(
         return authService.loginWithToken(provider, token)
     }
 
-    fun registerInformation(name: String, registerNumber: String?) {
+    fun registerInformation(name: String, registerNumber: String?): RegisterInformationDto {
         val userId = authService.getUserId()
         val user = userService.getUserById(userId)
-        userService.registerInformation(user, name, registerNumber)
+        return userService.registerInformation(user, name, registerNumber)
     }
 
     fun refreshToken(refreshToken: String): LoginResponseDto {

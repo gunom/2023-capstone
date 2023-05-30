@@ -2,6 +2,7 @@ package com.roomeasy.capstoneproject.service.user
 
 import com.roomeasy.capstoneproject.domain.user.User
 import com.roomeasy.capstoneproject.repository.user.UserRepository
+import com.roomeasy.capstoneproject.service.dto.RegisterInformationDto
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -17,7 +18,11 @@ class UserServiceImpl(
         return userRepository.findAllById(ids)
     }
 
-    override fun registerInformation(user: User, name: String, registerNumber: String?) {
+    override fun registerInformation(
+        user: User,
+        name: String,
+        registerNumber: String?
+    ): RegisterInformationDto {
         val newUser = User(
             id = user.id,
             providerName = user.providerName,
@@ -31,5 +36,9 @@ class UserServiceImpl(
         )
 
         userRepository.save(newUser)
+        return RegisterInformationDto(
+            isBroker = newUser.type == "broker"
+        )
+
     }
 }

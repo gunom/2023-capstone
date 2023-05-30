@@ -2,6 +2,7 @@ package com.roomeasy.capstoneproject.controller
 
 import com.roomeasy.capstoneproject.controller.dto.*
 import com.roomeasy.capstoneproject.facade.UserFacade
+import com.roomeasy.capstoneproject.service.dto.RegisterInformationDto
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -22,9 +23,9 @@ class AuthController(
     }
 
     @PostMapping("/register")
-    fun register(@RequestBody registerDto: RegisterDto): ResponseEntity<ResponseWithData<Nothing?>> {
-        userFacade.registerInformation(registerDto.name, registerDto.registerNumber)
-        return ResponseEntity.ok().body(ResponseWithData(HttpStatus.OK.value(),true,"회원가입 성공", null))
+    fun register(@RequestBody registerDto: RegisterDto): ResponseEntity<ResponseWithData<RegisterInformationDto>> {
+        val result = userFacade.registerInformation(registerDto.name, registerDto.registerNumber)
+        return ResponseEntity.ok().body(ResponseWithData(HttpStatus.OK.value(),true,"회원가입 성공", result))
     }
 
     @PostMapping("/refresh")
