@@ -10,7 +10,9 @@ class BrokerReview(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long = 0,
-    var score: Int,
+    var kindness: Int,
+    var reliability: Int,
+    var responseTime: Int,
     var brokerId: Long,
     var userId: Long
 )

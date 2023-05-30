@@ -36,8 +36,8 @@ class UserFacade(
         return brokerReviewService.getBrokerReviewByBrokerId(brokerId)
     }
 
-    fun addBrokerReview(brokerId: Long, score: Int){
+    fun addBrokerReview(brokerId: Long, kindness: Int, reliability: Int, responseTime: Int){
         val userId = authService.getUserId()
-        brokerReviewService.addBrokerReview(userId, brokerId, score)
+        brokerReviewService.addBrokerReview(userId, brokerId, kindness, reliability, responseTime)
     }
 }

@@ -11,19 +11,21 @@ class BrokerReviewServiceImpl(
 ) : BrokerReviewService{
     override fun getBrokerReviewByBrokerId(brokerId: Long): BrokerReviewDto {
         val scores = brokerReviewRepository.findAll().map {
-            it.score
+            it.kindness + it.reliability + it.responseTime
         }
         return BrokerReviewDto(
             scores.average()
         )
     }
 
-    override fun addBrokerReview(userId: Long, brokerId: Long, score: Int){
+    override fun addBrokerReview(userId: Long, brokerId: Long, kindness: Int, reliability: Int, responseTime: Int){
         brokerReviewRepository.save(
             BrokerReview(
                 userId = userId,
                 brokerId = brokerId,
-                score = score
+                kindness = kindness,
+                reliability = reliability,
+                responseTime = responseTime
             )
         )
     }

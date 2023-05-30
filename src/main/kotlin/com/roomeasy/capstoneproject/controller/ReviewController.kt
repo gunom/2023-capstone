@@ -62,7 +62,7 @@ class ReviewController(
 
     @PostMapping("/broker?broker_id={brokerId}")
     fun addBrokerReview(@PathVariable("brokerId") brokerId: Long, @RequestBody brokerReviewRequestDto: BrokerReviewRequestDto): ResponseEntity<ResponseWithData<Nothing?>> {
-        val brokerReview = userFacade.addBrokerReview(brokerId, brokerReviewRequestDto.score)
+        val brokerReview = userFacade.addBrokerReview(brokerId, brokerReviewRequestDto.kindness, brokerReviewRequestDto.reliability, brokerReviewRequestDto.responseTime)
         return ResponseEntity.ok()
             .body(ResponseWithData(HttpStatus.OK.value(), true, "중개인 리뷰 등록 성공", null))
     }

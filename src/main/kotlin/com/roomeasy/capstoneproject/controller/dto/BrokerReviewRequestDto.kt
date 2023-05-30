@@ -1,5 +1,7 @@
 package com.roomeasy.capstoneproject.controller.dto
 
 data class BrokerReviewRequestDto(
-    val score: Int
+    val kindness: Int,
+    val reliability: Int,
+    val responseTime: Int,
 )
