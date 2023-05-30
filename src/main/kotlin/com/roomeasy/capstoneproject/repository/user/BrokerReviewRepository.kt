@@ -4,4 +4,5 @@ import com.roomeasy.capstoneproject.domain.user.BrokerReview
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface BrokerReviewRepository: JpaRepository<BrokerReview, Long> {
+    fun findAllByBrokerId(brokerId: Long):List<BrokerReview>
 }

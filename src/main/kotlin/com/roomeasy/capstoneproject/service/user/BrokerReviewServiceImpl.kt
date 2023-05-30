@@ -10,7 +10,7 @@ class BrokerReviewServiceImpl(
     private val brokerReviewRepository: BrokerReviewRepository,
 ) : BrokerReviewService{
     override fun getBrokerReviewByBrokerId(brokerId: Long): BrokerReviewDto {
-        val scores = brokerReviewRepository.findAll().map {
+        val scores = brokerReviewRepository.findAllByBrokerId(brokerId).map {
             it.kindness + it.reliability + it.responseTime
         }
         return BrokerReviewDto(
