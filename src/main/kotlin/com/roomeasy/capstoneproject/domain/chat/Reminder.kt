@@ -17,8 +17,11 @@ class Reminder(
     @Column(name = "chat_room_id", nullable = false)
     val chatRoomId: Long,
 
-    @Column(name = "date", nullable = false, columnDefinition = "datetime default CURRENT_TIMESTAMP")
-    val date: LocalDateTime,
+    @Column(name = "date", nullable = false)
+    val date: String,
+
+    @Column(name = "time", nullable = false)
+    val time: String,
 
     @Column(name = "place")
     val place: String? = null,
