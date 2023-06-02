@@ -41,7 +41,7 @@ class ReviewServiceImpl(
 
     override fun deleteReview(reviewId: Long, userId: Long) {
         val review = reviewRepository.findById(reviewId).get()
-        if (review.userId == userId) throw Exception("You are not authorized to delete this review")
+        if (review.userId != userId) throw Exception("You are not authorized to delete this review")
         reviewRepository.deleteById(reviewId)
     }
 }
