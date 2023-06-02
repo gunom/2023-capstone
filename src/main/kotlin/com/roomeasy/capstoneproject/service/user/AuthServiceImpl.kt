@@ -29,9 +29,9 @@ class AuthServiceImpl(
         if(!jwtTokenProvider.validateRefreshToken(userToken)){
             throw JwtException("Invalid refresh token")
         }
-        val claims: Claims = jwtTokenProvider.getUserIdFromToken(userToken).getOrThrow()
+        val claims: Claims = jwtTokenProvider.getUserIdFromRefreshToken(userToken).getOrThrow()
         val userId: Long = claims["id"]?.let {
-            userRepository.findById(it as Long).get().id
+            userRepository.findById((it as Int).toLong()).get().id
         } ?: throw JwtException("Failed to retrieve user details from JWT token")
 
         return jwtTokenProvider.generateTokenByUserId(userId)

@@ -55,6 +55,19 @@ class JwtTokenProvider(
 
     }
 
+    fun getUserIdFromRefreshToken(token: String?): Result<Claims> {
+        return kotlin.runCatching {
+            Jwts.parserBuilder()
+                .setSigningKey(jwtRefreshSecret.toByteArray().copyOf(64))
+                .build()
+                .parseClaimsJws(token)
+                .body
+        }.onFailure {
+            return Result.failure(it)
+        }
+
+    }
+
     fun validateToken(authToken: String?): Boolean {
         Jwts.parserBuilder()
             .setSigningKey(jwtSecret.toByteArray().copyOf(64))
