@@ -86,11 +86,17 @@ class ChatFacade(
         }
     }
 
-    fun createChatRoom(brokerId: Long){
+    fun createChatRoom(brokerId: Long): ChatRoomDto {
         val userId = authService.getUserId()
         val chatRoom = chatRoomService.createChatRoom()
         chatRoomUserService.addChatRoomUser(chatRoom.id, userId)
         chatRoomUserService.addChatRoomUser(chatRoom.id, brokerId)
+        return ChatRoomDto(
+            id = chatRoom.id,
+            broker = userService.getUserById(brokerId).name,
+            lastMessage = "",
+            lastMessageTimestamp = LocalDateTime.now()
+        )
     }
 
     fun getReminder(chatRoomId: Long): Reminder {

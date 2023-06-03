@@ -16,9 +16,9 @@ class ChatRoomController(
     private val chatFacade: ChatFacade,
 ) {
     @PostMapping("/create")
-    fun createChatRoom(@RequestBody createChatRoomDto: CreateChatRoomDto): ResponseEntity<ResponseWithData<Nothing?>> {
-        chatFacade.createChatRoom(createChatRoomDto.brokerId)
-        return ResponseEntity.ok().body(ResponseWithData(200, true, "채팅방 생성 성공", null))
+    fun createChatRoom(@RequestBody createChatRoomDto: CreateChatRoomDto): ResponseEntity<ResponseWithData<ChatRoomDto>> {
+        val result = chatFacade.createChatRoom(createChatRoomDto.brokerId)
+        return ResponseEntity.ok().body(ResponseWithData(200, true, "채팅방 생성 성공", result))
     }
 
     @GetMapping("/list")
