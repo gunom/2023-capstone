@@ -93,7 +93,7 @@ class ChatFacade(
         chatRoomUserService.addChatRoomUser(chatRoom.id, brokerId)
         return ChatRoomDto(
             id = chatRoom.id,
-            broker = userService.getUserById(brokerId).name,
+            opponent = userService.getUserById(brokerId).name,
             lastMessage = "",
             lastMessageTimestamp = LocalDateTime.now()
         )
