@@ -34,7 +34,7 @@ class ChatRoomController(
     }
 
     @GetMapping("/reminder")
-    fun getReminder(@RequestParam chatRoomId: Long): ResponseEntity<ResponseWithData<Reminder>> {
+    fun getReminder(@RequestParam chatRoomId: Long): ResponseEntity<ResponseWithData<Reminder?>> {
         val result = chatFacade.getReminder(chatRoomId)
         return ResponseEntity.ok().body(ResponseWithData(200, true, "채팅방 리마인더 조회 성공", result))
     }

@@ -99,7 +99,7 @@ class ChatFacade(
         )
     }
 
-    fun getReminder(chatRoomId: Long): Reminder {
+    fun getReminder(chatRoomId: Long): Reminder? {
         return reminderService.getReminderByChatRoomId(chatRoomId)
     }
 

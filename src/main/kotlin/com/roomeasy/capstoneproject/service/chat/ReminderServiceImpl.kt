@@ -25,7 +25,7 @@ class ReminderServiceImpl(
         )
     }
 
-    override fun getReminderByChatRoomId(chatRoomId: Long): Reminder {
+    override fun getReminderByChatRoomId(chatRoomId: Long): Reminder? {
         return reminderRepository.findByChatRoomId(chatRoomId)
     }
 }

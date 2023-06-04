@@ -13,5 +13,5 @@ interface ReminderService {
         latitude: String
     )
 
-    fun getReminderByChatRoomId(chatRoomId: Long): Reminder
+    fun getReminderByChatRoomId(chatRoomId: Long): Reminder?
 }
