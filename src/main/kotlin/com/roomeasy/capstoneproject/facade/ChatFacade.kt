@@ -69,7 +69,7 @@ class ChatFacade(
         return chatRoomUsers.fold(mutableListOf()) {acc, chatRoomUser ->
             val lastMessage = lastMessages.find {
                 it.chatRoomId == chatRoomUser.chatRoomId
-            } ?: throw EntityNotFoundException("Message not found")
+            }
 
             val broker = brokers.find {
                 it.id == chatRoomUser.userId
@@ -77,9 +77,9 @@ class ChatFacade(
 
             val chatRoomDto = ChatRoomDto(
                 id = chatRoomUser.chatRoomId,
-                broker = broker.name,
-                lastMessage = lastMessage.content ?: "",
-                lastMessageTimestamp = lastMessage.timestamp
+                opponent = broker.name,
+                lastMessage = lastMessage?.content ?: "",
+                lastMessageTimestamp = chatRoomUser.createdAt
             )
             acc.add(chatRoomDto)
             acc

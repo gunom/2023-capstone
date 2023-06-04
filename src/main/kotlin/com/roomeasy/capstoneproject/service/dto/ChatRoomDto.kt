@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 
 data class ChatRoomDto(
     val id: Long,
-    val broker: String,
+    val opponent: String,
     val lastMessage: String,
     val lastMessageTimestamp: LocalDateTime,
 )
