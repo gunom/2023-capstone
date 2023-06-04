@@ -11,7 +11,7 @@ class BrokerReviewServiceImpl(
 ) : BrokerReviewService{
     override fun getBrokerReviewByBrokerId(brokerId: Long): BrokerReviewDto {
         val scores = brokerReviewRepository.findAllByBrokerId(brokerId).map {
-            it.kindness + it.reliability + it.responseTime
+            (it.kindness + it.reliability + it.responseTime)/3.0
         }
         return BrokerReviewDto(
             scores.average()
