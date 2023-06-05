@@ -26,6 +26,7 @@ class ChatFacade(
 ) {
     fun saveMessage(chatRoomId: Long, content: String, principal: Principal, accessToken: String): ChatMessage {
         val userId = principal.name.toLong()
+        println("debug: userId: $userId")
         val user = userService.getUserById(userId)
         val message = ChatMessage(
             userId = userId,
@@ -35,6 +36,7 @@ class ChatFacade(
             chatRoomId = chatRoomId,
             timestamp = LocalDateTime.now()
         )
+        println("debug: message: $message")
         return chatMessageService.saveChatMessage(message)
     }
 
