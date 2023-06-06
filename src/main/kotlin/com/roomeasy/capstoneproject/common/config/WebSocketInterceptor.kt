@@ -39,7 +39,6 @@ class WebSocketInterceptor(
     override fun preSend(message: Message<*>, channel: MessageChannel): Message<*>? {
         val accessor: StompHeaderAccessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor::class.java)!!
         println(accessor.command)
-        println(StompCommand.SEND)
         if (StompCommand.CONNECT == accessor.command || StompCommand.SEND == accessor.command) {
             val jwtToken = accessor.getNativeHeader("Authorization")?.get(0)
             print(jwtToken)
