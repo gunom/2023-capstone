@@ -6,7 +6,7 @@ data class ChatMessageDto(
     val id: Long,
     val sender: String,
     val userId: Long,
-    val myMessage: Boolean,
+    val accessToken: String?,
     val content: String,
     val timestamp: LocalDateTime,
     val chatRoomId: Long

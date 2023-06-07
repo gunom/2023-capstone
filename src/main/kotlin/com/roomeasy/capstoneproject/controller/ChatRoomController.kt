@@ -9,6 +9,7 @@ import com.roomeasy.capstoneproject.service.dto.ChatMessageDto
 import com.roomeasy.capstoneproject.service.dto.ChatRoomDto
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import javax.servlet.http.HttpServletRequest
 
 @RestController
 @RequestMapping("/api/chatroom")
@@ -28,8 +29,9 @@ class ChatRoomController(
     }
 
     @GetMapping("/chat-list/{chatRoomId}")
-    fun getChatRoomMessage(@PathVariable chatRoomId: Long): ResponseEntity<ResponseWithData<List<ChatMessageDto>>> {
-        val result = chatFacade.getChatRoomMessages(chatRoomId)
+    fun getChatRoomMessage(@PathVariable chatRoomId: Long, req: HttpServletRequest): ResponseEntity<ResponseWithData<List<ChatMessageDto>>> {
+        val accessToken = req.getHeader("Authorization").substring(7)
+        val result = chatFacade.getChatRoomMessages(chatRoomId, accessToken)
         return ResponseEntity.ok().body(ResponseWithData(200, true, "채팅방 메시지 조회 성공", result))
     }
 

@@ -40,14 +40,14 @@ class ChatFacade(
         return chatMessageService.saveChatMessage(message)
     }
 
-    fun getChatRoomMessages(chatRoomId: Long): List<ChatMessageDto> {
+    fun getChatRoomMessages(chatRoomId: Long, accessToken: String): List<ChatMessageDto> {
         val userId = authService.getUserId()
         return chatMessageService.getChatMessagesByChatRoomId(chatRoomId).map {
             ChatMessageDto(
                 id = it.id,
                 sender = it.sender,
                 userId = it.userId,
-                myMessage = it.userId == userId,
+                accessToken = if (it.userId == userId) accessToken else it.accessToken,
                 content = it.content,
                 timestamp = it.timestamp,
                 chatRoomId = it.chatRoomId
